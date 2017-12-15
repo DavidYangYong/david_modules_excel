@@ -4,13 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.excel.poi.exportExcel.impl.SXSSFWorkBookImpl;
@@ -24,20 +19,20 @@ public class ExportAnnotationTest {
 		ExportExcelMultiSupport excelMultiSupport = new ExportExcelMultiSupport();
 		excelMultiSupport.setMulti(false);
 		excelMultiSupport.getSxssfWorkBookOperation().setPageSize(120000);
-		ISXSSFWorkBook isxssfWorkBook = new SXSSFWorkBookImpl(Person.class);
+		ISXSSFWorkBook isxssfWorkBook = new SXSSFWorkBookImpl(org.fl.modules.test.excel.Person.class);
 		excelMultiSupport.run(1000, isxssfWorkBook, new ISxssfWorkBookList() {
 
 			public List doExecuteList(RowSelect rowSelect) {
-				List list = new ArrayList();
+				List<org.fl.modules.test.excel.Person> list = new ArrayList();
 				try {
-					Person person = new Person();
+					org.fl.modules.test.excel.Person person = new org.fl.modules.test.excel.Person();
 					person.setId(100);
 					person.setName("personTest1");
 					person.setMoney(60000.96);
 					//		person.setCreateDate("2017-10-11");
 					list.add(person);
 
-					person = new Person();
+					person = new org.fl.modules.test.excel.Person();
 					person.setId(20000);
 					person.setName("personTest2");
 					person.setMoney(50000.96);
@@ -45,11 +40,12 @@ public class ExportAnnotationTest {
 					person.setCreateDateTime("2014-04-24 08:11:59");
 
 					list.add(person);
-					person = new Person();
+					person = new org.fl.modules.test.excel.Person();
 					person.setId(0);
 					person.setName("personTest3");
 					person.setMoney(70000.96);
 					//		person.setCreateDate("2017-12-11");
+					person.setMoneyTotal("80000.96");
 					list.add(person);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

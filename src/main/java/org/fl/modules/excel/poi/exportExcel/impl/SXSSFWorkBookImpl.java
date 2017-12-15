@@ -1,5 +1,10 @@
 package org.fl.modules.excel.poi.exportExcel.impl;
 
+import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_BIGDECIMAL;
+import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DATE;
+import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DOUBLE;
+import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_INTEGER;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -22,7 +27,6 @@ import org.fl.modules.excel.poi.annotation.ExcelTarget;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.entity.ComparatorExcelField;
 import org.fl.modules.excel.poi.exportExcel.entity.ExcelExportEntity;
-import org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum;
 import org.fl.modules.utils.ExcelPublicUtil;
 
 public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
@@ -64,23 +68,31 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 					double doubleVal = ((BigDecimal) tempValue).doubleValue();
 					contentCell.setCellValue(doubleVal);
 				} else {
-					if (ExportTypeEnum.EXPORT_TYPE_DATE.compareTo(excelExportEntity.getExportFortmatType()) == 0
-							&& tempValue != null && excelExportEntity.getExportOtherFormat() != null) {
-						try {
-							SimpleDateFormat sdf = new SimpleDateFormat(excelExportEntity.getExportOtherFormat());
-							String dateString = getValueStr(tempValue);
-							Date date = sdf.parse(dateString);
-							contentCell.setCellValue(date);
-						} catch (Exception e) {
-							e.printStackTrace();
+					if (tempValue != null && excelExportEntity.getExportOtherFormat() != null) {
+						org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum exportTypeEnum = excelExportEntity
+								.getExportFortmatType();
+						switch (exportTypeEnum) {
+							case EXPORT_TYPE_DATE:
+								cellValueFormatDate(excelExportEntity, contentCell, tempValue);
+								break;
+							case EXPORT_TYPE_BIGDECIMAL:
+								cellValueFormatNumber(excelExportEntity, contentCell, tempValue);
+								break;
+							case EXPORT_TYPE_INTEGER:
+								cellValueFormatNumber(excelExportEntity, contentCell, tempValue);
+								break;
+							case EXPORT_TYPE_DOUBLE:
+								cellValueFormatNumber(excelExportEntity, contentCell, tempValue);
+								break;
+							default:
+								contentCell.setCellValue(getValueStr(tempValue));
+								break;
 						}
-
 					} else {
 						contentCell.setCellValue(getValueStr(tempValue));
 					}
+					contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
 				}
-				contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
-
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,6 +100,25 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 
 		}
 
+	}
+
+	private void cellValueFormatNumber(ExcelExportEntity excelExportEntity,
+			Cell contentCell, Object tempValue) {
+		String dataString = getValueStr(tempValue);
+		double doubleVal = new BigDecimal(dataString).doubleValue();
+		contentCell.setCellValue(doubleVal);
+	}
+
+	private void cellValueFormatDate(ExcelExportEntity excelExportEntity,
+			Cell contentCell, Object tempValue) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(excelExportEntity.getExportOtherFormat());
+			String dateString = getValueStr(tempValue);
+			Date date = sdf.parse(dateString);
+			contentCell.setCellValue(date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected String getValueStr(Object object) {
@@ -303,7 +334,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 			}
 			if (entity != null && StringUtils.isNotEmpty(entity.getExportOtherFormat())) {
 				CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
-				if (ExportTypeEnum.EXPORT_TYPE_DATE.compareTo(entity.getExportFortmatType()) == 0) {
+				if (EXPORT_TYPE_DATE.compareTo(entity.getExportFortmatType()) == 0) {
 					DataFormat dataFormat = sheet.getWorkbook().createDataFormat();
 					cellStyle.setDataFormat(dataFormat.getFormat(entity.getExportOtherFormat()));
 				} else {

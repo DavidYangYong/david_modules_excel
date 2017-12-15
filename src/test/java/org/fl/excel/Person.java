@@ -64,4 +64,18 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getMoneyTotal() {
+		return moneyTotal;
+	}
+
+	public void setMoneyTotal(String moneyTotal) {
+		this.moneyTotal = moneyTotal;
+	}
+
+	@Excel(exportName = "总金额", orderNum = "6", exportOtherFormat = "#,##0.00", exportFortmatType = ExportTypeEnum
+			.EXPORT_TYPE_BIGDECIMAL)
+
+	private String moneyTotal;
+
 }
