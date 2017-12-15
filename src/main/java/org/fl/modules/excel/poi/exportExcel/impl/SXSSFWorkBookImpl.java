@@ -1,9 +1,6 @@
 package org.fl.modules.excel.poi.exportExcel.impl;
 
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_BIGDECIMAL;
 import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DATE;
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DOUBLE;
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_INTEGER;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -21,7 +18,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.fl.modules.excel.poi.annotation.Excel;
 import org.fl.modules.excel.poi.annotation.ExcelCollection;
 import org.fl.modules.excel.poi.annotation.ExcelTarget;
@@ -329,8 +325,8 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 			contentCell = contenRow.createCell(i);
 			contentCell.setCellValue(entity.getName());
 			if (entity != null && entity.getWidth() == 0) {
-				//	sheet.setColumnWidth(i, 10 * 2 * 256);//默认10个中文字符
-				sheet.autoSizeColumn(i);
+				sheet.setColumnWidth(i, 10 * 2 * 256);//默认10个中文字符
+
 			} else {
 				sheet.setColumnWidth(i, entity.getWidth() * 2 * 256);//根据注解上设置的宽度进行设置
 			}

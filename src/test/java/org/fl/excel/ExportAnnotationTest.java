@@ -30,14 +30,14 @@ public class ExportAnnotationTest {
 					person.setId(100);
 					person.setName("personTest1");
 					person.setMoney(60000.96);
-					//		person.setCreateDate("2017-10-11");
+					person.setCreateDate("2017-10-11");
 					list.add(person);
 
 					person = new Person();
 					person.setId(20000);
 					person.setName("personTest2");
 					person.setMoney(50000.96);
-					//		person.setCreateDate("2017-11-11");
+					person.setCreateDate("2017-11-11");
 					person.setCreateDateTime("2014-04-24 08:11:59");
 
 					list.add(person);
@@ -45,7 +45,7 @@ public class ExportAnnotationTest {
 					person.setId(0);
 					person.setName("personTest3");
 					person.setMoney(70000.96);
-					//		person.setCreateDate("2017-12-11");
+					person.setCreateDate("2017-12-11");
 					person.setMoneyTotal("80000.96");
 					list.add(person);
 				} catch (Exception e) {
