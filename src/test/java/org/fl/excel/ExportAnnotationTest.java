@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.fl.modules.excel.Person;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.excel.poi.exportExcel.impl.SXSSFWorkBookImpl;
@@ -19,20 +20,20 @@ public class ExportAnnotationTest {
 		ExportExcelMultiSupport excelMultiSupport = new ExportExcelMultiSupport();
 		excelMultiSupport.setMulti(false);
 		excelMultiSupport.getSxssfWorkBookOperation().setPageSize(120000);
-		ISXSSFWorkBook isxssfWorkBook = new SXSSFWorkBookImpl(org.fl.modules.test.excel.Person.class);
+		ISXSSFWorkBook isxssfWorkBook = new SXSSFWorkBookImpl(Person.class);
 		excelMultiSupport.run(1000, isxssfWorkBook, new ISxssfWorkBookList() {
 
 			public List doExecuteList(RowSelect rowSelect) {
-				List<org.fl.modules.test.excel.Person> list = new ArrayList();
+				List<Person> list = new ArrayList();
 				try {
-					org.fl.modules.test.excel.Person person = new org.fl.modules.test.excel.Person();
+					Person person = new Person();
 					person.setId(100);
 					person.setName("personTest1");
 					person.setMoney(60000.96);
 					//		person.setCreateDate("2017-10-11");
 					list.add(person);
 
-					person = new org.fl.modules.test.excel.Person();
+					person = new Person();
 					person.setId(20000);
 					person.setName("personTest2");
 					person.setMoney(50000.96);
@@ -40,7 +41,7 @@ public class ExportAnnotationTest {
 					person.setCreateDateTime("2014-04-24 08:11:59");
 
 					list.add(person);
-					person = new org.fl.modules.test.excel.Person();
+					person = new Person();
 					person.setId(0);
 					person.setName("personTest3");
 					person.setMoney(70000.96);
