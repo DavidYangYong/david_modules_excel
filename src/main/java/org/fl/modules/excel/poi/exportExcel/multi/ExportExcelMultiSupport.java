@@ -26,7 +26,6 @@
 package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
@@ -243,7 +242,7 @@ public class ExportExcelMultiSupport {
 
 	private boolean isMulti;
 
-	private SXSSFWorkBookOperation sxssfWorkBookOperation;
+	private org.fl.modules.excel.poi.exportExcel.multi.SXSSFWorkBookOperation sxssfWorkBookOperation;
 
 	/**
 	 * 创建一个新的实例 ExportExcelMultiSupport.
@@ -253,7 +252,7 @@ public class ExportExcelMultiSupport {
 		sxssfWorkBookOperation = new SXSSFWorkBookOperation();
 	}
 
-	public SXSSFWorkBookOperation getSxssfWorkBookOperation() {
+	public org.fl.modules.excel.poi.exportExcel.multi.SXSSFWorkBookOperation getSxssfWorkBookOperation() {
 		return sxssfWorkBookOperation;
 	}
 
@@ -280,7 +279,8 @@ public class ExportExcelMultiSupport {
 		boolean isRun = false;
 		if (isMulti) {
 			//			ExecutorService executorService = Executors.newSingleThreadExecutor();
-			final CountDownLatchTemplete countDownLatchTemplete = new CountDownLatchTemplete();
+			final org.fl.modules.excel.poi.exportExcel.multi.CountDownLatchTemplete countDownLatchTemplete = new org.fl
+					.modules.excel.poi.exportExcel.multi.CountDownLatchTemplete();
 
 			//			boolean isCompleted = false;
 			countDownLatchTemplete.countDownLatch(Long.valueOf(count).intValue(), sxssfWorkBookOperation,
@@ -291,7 +291,7 @@ public class ExportExcelMultiSupport {
 		} else {
 			sxssfWorkBookOperation.setTotalRows(count);
 			sxssfWorkBookOperation.setSheet_num(1);
-			int pageSize = PageSizeUtils.pageSize;
+			int pageSize = org.fl.modules.excel.poi.exportExcel.multi.PageSizeUtils.pageSize;
 			RowSelect rowSelect = new RowSelect(1, pageSize, count);
 			sxssfWorkBookOperation.excute(sIsxssfWorkBook, sxssfWorkBookList.doExecuteList(rowSelect));
 			isRun = true;
