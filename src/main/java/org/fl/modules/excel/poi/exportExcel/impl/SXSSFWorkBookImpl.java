@@ -24,6 +24,7 @@ import org.fl.modules.excel.poi.annotation.ExcelTarget;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.entity.ComparatorExcelField;
 import org.fl.modules.excel.poi.exportExcel.entity.ExcelExportEntity;
+import org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum;
 import org.fl.modules.utils.ExcelPublicUtil;
 
 public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
@@ -56,6 +57,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 			Cell contentCell = contenRow.createCell(i);
 			try {
 				Object tempValue = getCellValue(excelExportEntity, object);
+				contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
 				if (tempValue instanceof Integer) {
 					Integer temp = (Integer) tempValue;
 					contentCell.setCellValue(temp);
@@ -66,7 +68,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 					contentCell.setCellValue(doubleVal);
 				} else {
 					if (tempValue != null && excelExportEntity.getExportOtherFormat() != null) {
-						org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum exportTypeEnum = excelExportEntity
+						ExportTypeEnum exportTypeEnum = excelExportEntity
 								.getExportFortmatType();
 						switch (exportTypeEnum) {
 							case EXPORT_TYPE_DATE:
@@ -88,7 +90,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 					} else {
 						contentCell.setCellValue(getValueStr(tempValue));
 					}
-					contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
+
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
