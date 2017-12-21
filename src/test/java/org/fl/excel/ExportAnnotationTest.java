@@ -31,6 +31,8 @@ public class ExportAnnotationTest {
 					person.setName("personTest1");
 					person.setMoney(60000.96);
 					person.setCreateDate("2017-10-11");
+					Float moneyFloat = new Float("100.1");
+					person.setMoneyFloat(moneyFloat);
 					list.add(person);
 
 					person = new Person();

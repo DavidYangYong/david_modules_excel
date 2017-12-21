@@ -61,6 +61,9 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 				if (tempValue instanceof Integer) {
 					Integer temp = (Integer) tempValue;
 					contentCell.setCellValue(temp);
+				} else if (tempValue instanceof Float) {
+					double doubleVal = ((Float) tempValue).doubleValue();
+					contentCell.setCellValue(doubleVal);
 				} else if (tempValue instanceof Double) {
 					contentCell.setCellValue((Double) tempValue);
 				} else if (tempValue instanceof BigDecimal) {

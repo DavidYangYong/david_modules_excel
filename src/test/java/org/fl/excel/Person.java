@@ -24,6 +24,17 @@ public class Person {
 			.EXPORT_TYPE_BIGDECIMAL)
 
 	private String moneyTotal;
+	@Excel(exportName = "金额1", orderNum = "7", exportOtherFormat = "#,##0.00")
+
+	private Float moneyFloat;
+
+	public Float getMoneyFloat() {
+		return moneyFloat;
+	}
+
+	public void setMoneyFloat(Float moneyFloat) {
+		this.moneyFloat = moneyFloat;
+	}
 
 	public Integer getId() {
 		return id;
