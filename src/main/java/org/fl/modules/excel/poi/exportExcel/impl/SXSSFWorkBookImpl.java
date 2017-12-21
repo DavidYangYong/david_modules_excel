@@ -1,9 +1,6 @@
 package org.fl.modules.excel.poi.exportExcel.impl;
 
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_BIGDECIMAL;
 import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DATE;
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_DOUBLE;
-import static org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum.EXPORT_TYPE_INTEGER;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,6 +24,7 @@ import org.fl.modules.excel.poi.annotation.ExcelTarget;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.entity.ComparatorExcelField;
 import org.fl.modules.excel.poi.exportExcel.entity.ExcelExportEntity;
+import org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum;
 import org.fl.modules.utils.ExcelPublicUtil;
 
 public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
@@ -59,9 +57,13 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 			Cell contentCell = contenRow.createCell(i);
 			try {
 				Object tempValue = getCellValue(excelExportEntity, object);
+				contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
 				if (tempValue instanceof Integer) {
 					Integer temp = (Integer) tempValue;
 					contentCell.setCellValue(temp);
+				} else if (tempValue instanceof Float) {
+					double doubleVal = ((Float) tempValue).doubleValue();
+					contentCell.setCellValue(doubleVal);
 				} else if (tempValue instanceof Double) {
 					contentCell.setCellValue((Double) tempValue);
 				} else if (tempValue instanceof BigDecimal) {
@@ -69,7 +71,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 					contentCell.setCellValue(doubleVal);
 				} else {
 					if (tempValue != null && excelExportEntity.getExportOtherFormat() != null) {
-						org.fl.modules.excel.poi.exportExcel.entity.ExportTypeEnum exportTypeEnum = excelExportEntity
+						ExportTypeEnum exportTypeEnum = excelExportEntity
 								.getExportFortmatType();
 						switch (exportTypeEnum) {
 							case EXPORT_TYPE_DATE:
@@ -91,7 +93,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 					} else {
 						contentCell.setCellValue(getValueStr(tempValue));
 					}
-					contentCell.setCellStyle(contenRow.getSheet().getColumnStyle(i));
+
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -329,6 +331,7 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 			contentCell.setCellValue(entity.getName());
 			if (entity != null && entity.getWidth() == 0) {
 				sheet.setColumnWidth(i, 10 * 2 * 256);//默认10个中文字符
+
 			} else {
 				sheet.setColumnWidth(i, entity.getWidth() * 2 * 256);//根据注解上设置的宽度进行设置
 			}

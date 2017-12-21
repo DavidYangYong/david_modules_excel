@@ -4,7 +4,7 @@
 
 	<groupId>org.fl</groupId>
 	<artifactId>david-modules-excel</artifactId>
-	<version>0.1.3-release</version>
+	<version>0.1.5-release</version>
 	<packaging>jar</packaging>
 
 	<name>david-modules-excel</name>
