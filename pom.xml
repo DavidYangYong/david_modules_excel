@@ -26,6 +26,13 @@
 					<updateReleaseInfo>true</updateReleaseInfo>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+
 		</plugins>
 	</build>
 	<dependencies>
@@ -83,8 +90,6 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
-
 	</dependencies>
 	<distributionManagement>
 		<repository>
