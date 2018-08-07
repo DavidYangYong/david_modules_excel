@@ -291,9 +291,12 @@ public class ExportExcelMultiSupport {
 		} else {
 			sxssfWorkBookOperation.setTotalRows(count);
 			sxssfWorkBookOperation.setSheet_num(1);
-			int pageSize = org.fl.modules.excel.poi.exportExcel.multi.PageSizeUtils.pageSize;
+			if (sxssfWorkBookOperation.getPageSize() == 0) {
+				sxssfWorkBookOperation.setPageSize(PageSizeUtils.pageSize);
+			}
+			int pageSize = sxssfWorkBookOperation.getPageSize();
 			RowSelect rowSelect = new RowSelect(1, pageSize, count);
-			sxssfWorkBookOperation.excute(sIsxssfWorkBook, sxssfWorkBookList.doExecuteList(rowSelect));
+			sxssfWorkBookOperation.excute(sIsxssfWorkBook, sxssfWorkBookList.doExecuteList(rowSelect), pageSize);
 			isRun = true;
 		}
 		if (logger.isInfoEnabled()) {
