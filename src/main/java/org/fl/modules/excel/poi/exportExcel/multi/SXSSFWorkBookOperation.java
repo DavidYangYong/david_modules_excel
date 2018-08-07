@@ -32,8 +32,6 @@ import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -170,9 +168,9 @@ public class SXSSFWorkBookOperation {
 		}
 	}
 
-	public void excute(ISXSSFWorkBook sxsWorkBook, List list)
+	public void excute(ISXSSFWorkBook sxsWorkBook, List list, int pageSize)
 			throws IOException, RuntimeException {
-		excute(PageSizeUtils.pageSize, sxsWorkBook, list);
+		excute(pageSize, sxsWorkBook, list);
 	}
 
 	public int getPageNo() {
