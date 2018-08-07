@@ -44,7 +44,5 @@ package org.fl.modules.excel.poi.exportExcel.multi;
  * @version
  */
 public class PageSizeUtils {
-
-	public final static int pageNo = 8;
 	public final static int pageSize = 60000;
 }
