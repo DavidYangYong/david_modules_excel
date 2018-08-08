@@ -30,7 +30,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
@@ -113,9 +112,11 @@ class CountDownLatchTemplete {
 					sxssfWorkBookOperation.getPageSize());
 			exe.execute(threadTemplete);
 		}
-
-		// 记录所有连接线程的开始时间
-		long start = System.currentTimeMillis();
+		long start = 0;
+		if (logger.isDebugEnabled()) {
+			// 记录所有连接线程的开始时间
+			start = System.currentTimeMillis();
+		}
 
 		// 所有线程虽然都已建立，并 start。但只有等闸门打开才都开始运行。
 		try {
@@ -133,14 +134,12 @@ class CountDownLatchTemplete {
 					e);
 		}
 
-		// 记录所有连接线程的结束时间
-		long end = System.currentTimeMillis();
 		if (logger.isDebugEnabled()) {
+			// 记录所有连接线程的结束时间
+			long end = System.currentTimeMillis();
 			logger.debug(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList) - The task takes time(ms): "
 							+ ((end - start) / 1000));
-		}
-		if (logger.isDebugEnabled()) {
 			logger.debug(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList) - CountDownLatchDemo1:"
 							+ new Date().toString());

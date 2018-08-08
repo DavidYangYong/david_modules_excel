@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -29,6 +30,8 @@ import org.fl.modules.utils.ExcelPublicUtil;
 
 public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 
+	private static Logger logger = Logger
+			.getLogger(SXSSFWorkBookImpl.class);
 	private List<ExcelExportEntity> excelParams;
 
 	public SXSSFWorkBookImpl(Class<?> pojoClass) {
@@ -45,6 +48,8 @@ public class SXSSFWorkBookImpl implements ISXSSFWorkBook {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.debug("excute(int, ISXSSFWorkBook, List) - "
+					+ new Date().toString());
 		}
 		sortAllParams(excelParams);
 	}
