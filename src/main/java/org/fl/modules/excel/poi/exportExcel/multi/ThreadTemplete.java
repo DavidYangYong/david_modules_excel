@@ -96,14 +96,16 @@ class ThreadTemplete implements Runnable {
 			List list = getList(rowSelect, sxssfWorkBookList);
 			if (list == null || list.isEmpty()) {
 				Thread.currentThread().interrupt();
-			}
-			sxssfWorkBookOperation.excute(pageSize,
-					sxssfWorkBookOperation.getSxIsxssfWorkBook(), list);
+			} else {
+				sxssfWorkBookOperation.excute(
+						sxssfWorkBookOperation.getSxIsxssfWorkBook(), list, pageSize);
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("run() - " + Thread.currentThread().getName()
-						+ " has been working end !!!!");
+				if (logger.isDebugEnabled()) {
+					logger.debug("run() - " + Thread.currentThread().getName()
+							+ " has been working end !!!!");
+				}
 			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.error("run()", e);

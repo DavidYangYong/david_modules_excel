@@ -120,8 +120,11 @@ public class SXSSFWorkBookOperation {
 	 *            list 数据
 	 **/
 
-	public void excute(int pageSize, ISXSSFWorkBook sxsWorkBook, List list)
+	public void excute(ISXSSFWorkBook sxsWorkBook, List list, int pageSize)
 			throws IOException, RuntimeException {
+		if (list == null || list.isEmpty()) {
+			throw new RuntimeException("export list is null or empty");
+		}
 		int rowCount = list.size();
 		if (rowCount > pageSize) {
 			throw new RuntimeException("导出数据条数大于excel规定的条数");
@@ -164,10 +167,6 @@ public class SXSSFWorkBookOperation {
 		}
 	}
 
-	public void excute(ISXSSFWorkBook sxsWorkBook, List list, int pageSize)
-			throws IOException, RuntimeException {
-		excute(pageSize, sxsWorkBook, list);
-	}
 
 	public int getPageNo() {
 		return pageNo;

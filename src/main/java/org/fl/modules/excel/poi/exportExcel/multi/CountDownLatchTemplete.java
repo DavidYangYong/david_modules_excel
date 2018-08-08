@@ -88,10 +88,6 @@ class CountDownLatchTemplete {
 		pageSize = sxssfWorkBookOperation.getPageSize();
 		sxssfWorkBookOperation.setTotalRows(totalRows);
 		int pageNo = (totalRows + (pageSize - 1)) / pageSize; // 页数
-		// if (pageNo > PageSizeUtils.pageNo) {
-		// throw new RuntimeException("实际页数" + pageNo + "大于最大页数:"
-		// + PageSizeUtils.pageNo);
-		// }
 		sxssfWorkBookOperation.setPageNo(pageNo);
 		if (logger.isDebugEnabled()) {
 			logger.debug(
