@@ -67,7 +67,7 @@ public class SXSSFWorkBookOperation {
 
 	private int rowaccess = 100;// 内存中缓存记录行数;
 
-	private int sheet_num;// 生成sheet_num个SHEET
+	private int sheetNum;// 生成sheet_num个SHEET
 
 	private ISXSSFWorkBook sxIsxssfWorkBook;// 执行excel操作接口
 	private int totalRows;// 导出数据总数
@@ -176,8 +176,12 @@ public class SXSSFWorkBookOperation {
 		return pageSize;
 	}
 
-	public int getSheet_num() {
-		return sheet_num;
+	public int getSheetNum() {
+		return sheetNum;
+	}
+
+	public void setSheetNum(int sheetNum) {
+		this.sheetNum = sheetNum;
 	}
 
 	public ISXSSFWorkBook getSxIsxssfWorkBook() {
@@ -200,9 +204,6 @@ public class SXSSFWorkBookOperation {
 		this.pageSize = pageSize;
 	}
 
-	public void setSheet_num(int sheetNum) {
-		sheet_num = sheetNum;
-	}
 
 	public void setSxIsxssfWorkBook(ISXSSFWorkBook sxIsxssfWorkBook) {
 		this.sxIsxssfWorkBook = sxIsxssfWorkBook;
