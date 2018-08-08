@@ -277,10 +277,13 @@ public class ExportExcelMultiSupport {
 		}
 		sxssfWorkBookOperation.setSxIsxssfWorkBook(sIsxssfWorkBook);
 		boolean isRun = false;
+		if (count <= PageSizeUtils.pageSize) {
+			this.setMulti(false);
+			this.getSxssfWorkBookOperation().setPageSize(count);
+		}
 		if (isMulti) {
 			//			ExecutorService executorService = Executors.newSingleThreadExecutor();
-			final org.fl.modules.excel.poi.exportExcel.multi.CountDownLatchTemplete countDownLatchTemplete = new org.fl
-					.modules.excel.poi.exportExcel.multi.CountDownLatchTemplete();
+			final CountDownLatchTemplete countDownLatchTemplete = new CountDownLatchTemplete();
 
 			//			boolean isCompleted = false;
 			countDownLatchTemplete.countDownLatch(Long.valueOf(count).intValue(), sxssfWorkBookOperation,
@@ -290,7 +293,7 @@ public class ExportExcelMultiSupport {
 			// 等待子线程结束，再继续执行下面的代码
 		} else {
 			sxssfWorkBookOperation.setTotalRows(count);
-			sxssfWorkBookOperation.setSheet_num(1);
+			sxssfWorkBookOperation.setSheetNum(1);
 			if (sxssfWorkBookOperation.getPageSize() == 0) {
 				sxssfWorkBookOperation.setPageSize(PageSizeUtils.pageSize);
 			}
