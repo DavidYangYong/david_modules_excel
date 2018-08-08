@@ -106,6 +106,7 @@ public class SXSSFWorkBookOperation {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("compressFiles2Zip()", e);
 		}
 	}
 
@@ -128,9 +129,9 @@ public class SXSSFWorkBookOperation {
 		if (logger.isDebugEnabled()) {
 			logger.debug("excute(int, ISXSSFWorkBook, List) - start");
 		}
-
-		long curr_time = System.currentTimeMillis();
+		long curr_time = 0;
 		if (logger.isDebugEnabled()) {
+			curr_time = System.currentTimeMillis();
 			logger.debug("excute(int, ISXSSFWorkBook, List) - "
 					+ new Date().toString());
 		}
@@ -157,13 +158,8 @@ public class SXSSFWorkBookOperation {
 		if (logger.isDebugEnabled()) {
 			logger.debug("excute(int, ISXSSFWorkBook, List) - 耗时:"
 					+ (System.currentTimeMillis() - curr_time) / 1000 + "秒");
-		}
-		if (logger.isDebugEnabled()) {
 			logger.debug("excute(int, ISXSSFWorkBook, List) - "
 					+ new Date().toString());
-		}
-
-		if (logger.isDebugEnabled()) {
 			logger.debug("excute(int, ISXSSFWorkBook, List) - end");
 		}
 	}
