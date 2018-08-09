@@ -63,6 +63,8 @@ class CountDownLatchTemplete {
 
 	private boolean isClose;
 
+
+
 	/***
 	 * 多线程主方法
 	 *
@@ -99,7 +101,7 @@ class CountDownLatchTemplete {
 		CountDownLatch doneCdl = new CountDownLatch(pageNo);// 连接的总数为 pageNo 闸门
 		sxssfWorkBookOperation.setSheetNum(pageNo);
 		// 设置特定的线程池，大小为pageNo
-		ExecutorService exe = Executors.newFixedThreadPool(pageNo);
+		ExecutorService exe = Executors.newFixedThreadPool(pageNo, new NamedThreadFactory());
 		for (int i = 1; i <= pageNo; i++) {
 			RowSelect rowSelect = new RowSelect(i, pageSize, totalRows);
 
@@ -128,6 +130,7 @@ class CountDownLatchTemplete {
 			logger.error(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList)",
 					e);
+			exe.shutdownNow();
 		}
 
 		if (logger.isDebugEnabled()) {
