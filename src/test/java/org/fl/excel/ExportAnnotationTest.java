@@ -18,10 +18,10 @@ public class ExportAnnotationTest {
 	public static void main(String[] args)
 			throws IOException, RuntimeException {
 		ExportExcelMultiSupport excelMultiSupport = new ExportExcelMultiSupport();
-		excelMultiSupport.setMulti(false);
+		excelMultiSupport.setMulti(true);
 		excelMultiSupport.getSxssfWorkBookOperation().setPageSize(120000);
 		ISXSSFWorkBook isxssfWorkBook = new SXSSFWorkBookImpl(Person.class);
-		excelMultiSupport.run(1000, isxssfWorkBook, new ISxssfWorkBookList() {
+		excelMultiSupport.run(1000000, isxssfWorkBook, new ISxssfWorkBookList() {
 
 			public List doExecuteList(RowSelect rowSelect) {
 				List<Person> list = new ArrayList();

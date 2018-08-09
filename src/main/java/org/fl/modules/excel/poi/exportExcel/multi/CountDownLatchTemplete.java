@@ -105,7 +105,7 @@ class CountDownLatchTemplete {
 		CountDownLatch doneCdl = new CountDownLatch(pageNo);// 连接的总数为 pageNo 闸门
 		sxssfWorkBookOperation.setSheetNum(pageNo);
 		// 设置特定的线程池，大小为pageNo
-		ExecutorService exe = new ThreadPoolExecutor(pageSize, pageSize,
+		ExecutorService exe = new ThreadPoolExecutor(pageNo, pageNo,
 
 				0L, TimeUnit.MILLISECONDS,
 
