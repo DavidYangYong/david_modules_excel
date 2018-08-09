@@ -197,52 +197,11 @@ import org.fl.modules.utils.RowSelect;
  */
 public class ExportExcelMultiSupport {
 
-	class ExecutorServiceRun implements Runnable {
-
-		private volatile Thread mTheThread = null;
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
-		public void run() {
-			if (mTheThread != Thread.currentThread()) {
-				throw new RuntimeException();
-			}
-			while (!Thread.interrupted() && mTheThread != null) {// 如果标志位为null，不再继续。
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					Thread.currentThread().interrupt(); // mTheThread可能已经为空了，因此用Thread.currentThread()替代之
-				}
-			}
-		}
-
-		public void start() {
-			mTheThread = new Thread(this);
-			mTheThread.start();
-		}
-
-		public void stop() {
-			if (mTheThread != null) {
-				mTheThread.interrupt();
-				try {
-					mTheThread.join(); // 等待线程彻底结束
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					mTheThread.interrupt();
-				}
-			}
-		}
-
-	}
-
 	private static Logger logger = Logger.getLogger(ExportExcelMultiSupport.class);
 
 	private boolean isMulti;
 
-	private org.fl.modules.excel.poi.exportExcel.multi.SXSSFWorkBookOperation sxssfWorkBookOperation;
+	private SXSSFWorkBookOperation sxssfWorkBookOperation;
 
 	/**
 	 * 创建一个新的实例 ExportExcelMultiSupport.
@@ -252,7 +211,7 @@ public class ExportExcelMultiSupport {
 		sxssfWorkBookOperation = new SXSSFWorkBookOperation();
 	}
 
-	public org.fl.modules.excel.poi.exportExcel.multi.SXSSFWorkBookOperation getSxssfWorkBookOperation() {
+	public SXSSFWorkBookOperation getSxssfWorkBookOperation() {
 		return sxssfWorkBookOperation;
 	}
 

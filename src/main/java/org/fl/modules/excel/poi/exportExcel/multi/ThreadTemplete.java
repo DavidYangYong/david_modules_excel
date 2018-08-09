@@ -90,7 +90,6 @@ class ThreadTemplete implements Runnable {
 		}
 		try {
 
-			doneCdl.countDown();
 			// 此处需要代码清单一的那些连接操作
 
 			List list = getList(rowSelect, sxssfWorkBookList);
@@ -110,6 +109,13 @@ class ThreadTemplete implements Runnable {
 			// TODO Auto-generated catch block
 			logger.error("run()", e);
 			Thread.currentThread().interrupt();
+		} finally {
+			doneCdl.countDown();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
