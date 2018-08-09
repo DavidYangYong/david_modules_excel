@@ -26,9 +26,11 @@ package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
@@ -62,6 +64,10 @@ class CountDownLatchTemplete {
 			.getLogger(CountDownLatchTemplete.class);
 
 	private boolean isClose;
+
+	final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(50);
+
+
 
 	/***
 	 * 多线程主方法
@@ -99,7 +105,11 @@ class CountDownLatchTemplete {
 		CountDownLatch doneCdl = new CountDownLatch(pageNo);// 连接的总数为 pageNo 闸门
 		sxssfWorkBookOperation.setSheetNum(pageNo);
 		// 设置特定的线程池，大小为pageNo
-		ExecutorService exe = Executors.newFixedThreadPool(pageNo);
+		ExecutorService exe = new ThreadPoolExecutor(pageSize, pageSize,
+
+				0L, TimeUnit.MILLISECONDS,
+
+				queue, new NamedThreadFactory());
 		for (int i = 1; i <= pageNo; i++) {
 			RowSelect rowSelect = new RowSelect(i, pageSize, totalRows);
 
@@ -128,6 +138,7 @@ class CountDownLatchTemplete {
 			logger.error(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList)",
 					e);
+			exe.shutdownNow();
 		}
 
 		if (logger.isDebugEnabled()) {
