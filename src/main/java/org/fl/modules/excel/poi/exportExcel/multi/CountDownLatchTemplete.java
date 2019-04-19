@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
@@ -105,10 +106,11 @@ class CountDownLatchTemplete {
 		for (int i = 1; i <= pageNo; i++) {
 			RowSelect rowSelect = new RowSelect(i, pageSize, totalRows);
 
-			ThreadTemplete threadTemplete = new ThreadTemplete(doneCdl,
+			ThreadTemplete threadTemplete = new ThreadTemplete(
 					sxssfWorkBookOperation, rowSelect, sxssfWorkBookList,
 					sxssfWorkBookOperation.getPageSize());
-			exe.execute(threadTemplete);
+			Future future = exe.submit(threadTemplete);
+			doneCdl.countDown();
 		}
 		long start = 0;
 		if (logger.isDebugEnabled()) {

@@ -26,7 +26,6 @@ package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import org.apache.log4j.Logger;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
@@ -52,8 +51,6 @@ import org.fl.modules.utils.RowSelect;
  */
 class ThreadTemplete implements Runnable {
 
-	private static CountDownLatch doneCdl;// 所有连接工作都结束的控制器
-
 	/**
 	 * Logger for this class
 	 */
@@ -65,10 +62,9 @@ class ThreadTemplete implements Runnable {
 
 	private SXSSFWorkBookOperation sxssfWorkBookOperation;
 
-	public ThreadTemplete(CountDownLatch doneCdl,
+	public ThreadTemplete(
 			SXSSFWorkBookOperation sxssfWorkBookOperation, RowSelect rowSelect,
 			ISxssfWorkBookList sxssfWorkBookList, int pageSize) {
-		this.doneCdl = doneCdl;
 		this.sxssfWorkBookOperation = sxssfWorkBookOperation;
 		this.rowSelect = rowSelect;
 		this.sxssfWorkBookList = sxssfWorkBookList;
@@ -109,13 +105,6 @@ class ThreadTemplete implements Runnable {
 			// TODO Auto-generated catch block
 			logger.error("run()", e);
 			Thread.currentThread().interrupt();
-		} finally {
-			doneCdl.countDown();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }
