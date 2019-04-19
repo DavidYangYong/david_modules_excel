@@ -12,6 +12,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<source.jdk>1.7</source.jdk>
+		<target.jdk>1.7</target.jdk>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
