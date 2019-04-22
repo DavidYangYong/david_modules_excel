@@ -26,7 +26,7 @@
 package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
@@ -195,9 +195,8 @@ import org.fl.modules.utils.RowSelect;
  *           }
  *           }
  */
+@Slf4j
 public class ExportExcelMultiSupport {
-
-	private static Logger logger = Logger.getLogger(ExportExcelMultiSupport.class);
 
 	private boolean isMulti;
 
@@ -230,8 +229,8 @@ public class ExportExcelMultiSupport {
 	public boolean run(final int count, final ISXSSFWorkBook sIsxssfWorkBook,
 			final ISxssfWorkBookList sxssfWorkBookList) throws IOException, RuntimeException {
 		long start = 0;
-		if (logger.isInfoEnabled()) {
-			logger.info("查询数据开始.....");
+		if (log.isInfoEnabled()) {
+			log.info("查询数据开始.....");
 			start = System.currentTimeMillis();
 		}
 		sxssfWorkBookOperation.setSxIsxssfWorkBook(sIsxssfWorkBook);
@@ -261,12 +260,12 @@ public class ExportExcelMultiSupport {
 			sxssfWorkBookOperation.excute(sIsxssfWorkBook, sxssfWorkBookList.doExecuteList(rowSelect), pageSize);
 			isRun = true;
 		}
-		if (logger.isInfoEnabled()) {
+		if (log.isInfoEnabled()) {
 			long end = System.currentTimeMillis();
 			long temp = (end - start) / 1000;
-			logger.info("耗时:" + temp + "秒");
-			logger.info("耗时:" + temp / 60 + "分钟");
-			logger.info("查询数据结束.....");
+			log.info("耗时:" + temp + "秒");
+			log.info("耗时:" + temp / 60 + "分钟");
+			log.info("查询数据结束.....");
 		}
 		return isRun;
 	}

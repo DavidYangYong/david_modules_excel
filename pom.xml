@@ -4,17 +4,6 @@
 
 	<groupId>org.fl</groupId>
 	<artifactId>david-modules-excel</artifactId>
-	<version>1.0.1</version>
-	<packaging>jar</packaging>
-
-	<name>david-modules-excel</name>
-	<url>http://maven.apache.org</url>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<source.jdk>1.7</source.jdk>
-		<target.jdk>1.7</target.jdk>
-	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -34,9 +23,21 @@
 				<artifactId>maven-archetype-plugin</artifactId>
 				<version>2.2</version>
 			</plugin>
-
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${source.jdk}</source>
+					<target>${target.jdk}</target>
+				</configuration>
+				<version>3.1</version>
+			</plugin>
 		</plugins>
 	</build>
+	<packaging>jar</packaging>
+
+	<name>david-modules-excel</name>
+	<url>http://maven.apache.org</url>
+
 	<dependencies>
 
 		<dependency>
@@ -60,9 +61,27 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<version>${lombok.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>logback-classic</artifactId>
+			<groupId>ch.qos.logback</groupId>
+			<scope>compile</scope>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<artifactId>log4j-to-slf4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<scope>compile</scope>
+			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<artifactId>jul-to-slf4j</artifactId>
+			<groupId>org.slf4j</groupId>
+			<scope>compile</scope>
+			<version>1.7.25</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -93,6 +112,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<source.jdk>1.7</source.jdk>
+		<target.jdk>1.7</target.jdk>
+		<lombok.version>1.16.20</lombok.version>
+	</properties>
+	<version>1.0.2</version>
 	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>

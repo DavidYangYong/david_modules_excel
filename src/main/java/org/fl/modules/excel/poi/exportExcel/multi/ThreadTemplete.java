@@ -26,7 +26,7 @@ package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
 import java.util.List;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
 
@@ -49,12 +49,8 @@ import org.fl.modules.utils.RowSelect;
  *
  * @version
  */
+@Slf4j
 class ThreadTemplete implements Runnable {
-
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger.getLogger(ThreadTemplete.class);
 
 	private int pageSize;
 	private RowSelect rowSelect;
@@ -80,8 +76,8 @@ class ThreadTemplete implements Runnable {
 	}
 
 	public void run() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("run() - " + Thread.currentThread().getName()
+		if (log.isDebugEnabled()) {
+			log.debug("run() - " + Thread.currentThread().getName()
 					+ " has been working!!!!");
 		}
 		try {
@@ -95,15 +91,15 @@ class ThreadTemplete implements Runnable {
 				sxssfWorkBookOperation.excute(
 						sxssfWorkBookOperation.getSxIsxssfWorkBook(), list, pageSize);
 
-				if (logger.isDebugEnabled()) {
-					logger.debug("run() - " + Thread.currentThread().getName()
+				if (log.isDebugEnabled()) {
+					log.debug("run() - " + Thread.currentThread().getName()
 							+ " has been working end !!!!");
 				}
 			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error("run()", e);
+			log.error("run()", e);
 			Thread.currentThread().interrupt();
 		}
 	}
