@@ -28,10 +28,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
-import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -57,10 +57,9 @@ import org.fl.modules.excel.poi.exportExcel.ISXSSFWorkBook;
  *
  * @version
  */
+@Slf4j
 public class SXSSFWorkBookOperation {
 
-	private static Logger logger = Logger
-			.getLogger(SXSSFWorkBookOperation.class);
 	private int pageNo; // 分页数
 
 	private int pageSize; // 每页行数
@@ -106,7 +105,7 @@ public class SXSSFWorkBookOperation {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			logger.error("compressFiles2Zip()", e);
+			log.error("compressFiles2Zip()", e);
 		}
 	}
 
@@ -129,13 +128,13 @@ public class SXSSFWorkBookOperation {
 		if (rowCount > pageSize) {
 			throw new RuntimeException("导出数据条数大于excel规定的条数");
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("excute(int, ISXSSFWorkBook, List) - start");
+		if (log.isDebugEnabled()) {
+			log.debug("excute(int, ISXSSFWorkBook, List) - start");
 		}
 		long curr_time = 0;
-		if (logger.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			curr_time = System.currentTimeMillis();
-			logger.debug("excute(int, ISXSSFWorkBook, List) - "
+			log.debug("excute(int, ISXSSFWorkBook, List) - "
 					+ new Date().toString());
 		}
 		Sheet sh = null;
@@ -158,12 +157,12 @@ public class SXSSFWorkBookOperation {
 			}
 		}
 		/* 计算耗时 */
-		if (logger.isDebugEnabled()) {
-			logger.debug("excute(int, ISXSSFWorkBook, List) - 耗时:"
+		if (log.isDebugEnabled()) {
+			log.debug("excute(int, ISXSSFWorkBook, List) - 耗时:"
 					+ (System.currentTimeMillis() - curr_time) / 1000 + "秒");
-			logger.debug("excute(int, ISXSSFWorkBook, List) - "
+			log.debug("excute(int, ISXSSFWorkBook, List) - "
 					+ new Date().toString());
-			logger.debug("excute(int, ISXSSFWorkBook, List) - end");
+			log.debug("excute(int, ISXSSFWorkBook, List) - end");
 		}
 	}
 

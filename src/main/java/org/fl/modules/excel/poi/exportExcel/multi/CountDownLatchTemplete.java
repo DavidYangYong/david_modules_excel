@@ -29,8 +29,9 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
 
@@ -53,14 +54,8 @@ import org.fl.modules.utils.RowSelect;
  *
  * @version
  */
+@Slf4j
 class CountDownLatchTemplete {
-
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger
-			.getLogger(CountDownLatchTemplete.class);
-
 	private boolean isClose;
 
 
@@ -91,8 +86,8 @@ class CountDownLatchTemplete {
 		sxssfWorkBookOperation.setTotalRows(totalRows);
 		int pageNo = (totalRows + (pageSize - 1)) / pageSize; // 页数
 		sxssfWorkBookOperation.setPageNo(pageNo);
-		if (logger.isDebugEnabled()) {
-			logger.debug(
+		if (log.isDebugEnabled()) {
+			log.debug(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList) - CountDownLatchDemo1:"
 
 							+ new Date().toString());
@@ -105,13 +100,14 @@ class CountDownLatchTemplete {
 		for (int i = 1; i <= pageNo; i++) {
 			RowSelect rowSelect = new RowSelect(i, pageSize, totalRows);
 
-			ThreadTemplete threadTemplete = new ThreadTemplete(doneCdl,
+			ThreadTemplete threadTemplete = new ThreadTemplete(
 					sxssfWorkBookOperation, rowSelect, sxssfWorkBookList,
 					sxssfWorkBookOperation.getPageSize());
-			exe.execute(threadTemplete);
+			Future future = exe.submit(threadTemplete);
+			doneCdl.countDown();
 		}
 		long start = 0;
-		if (logger.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			// 记录所有连接线程的开始时间
 			start = System.currentTimeMillis();
 		}
@@ -127,19 +123,19 @@ class CountDownLatchTemplete {
 			} while (loop);
 			isClose = true;
 		} catch (InterruptedException e) {
-			logger.error(
+			log.error(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList)",
 					e);
 			exe.shutdownNow();
 		}
 
-		if (logger.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			// 记录所有连接线程的结束时间
 			long end = System.currentTimeMillis();
-			logger.debug(
+			log.debug(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList) - The task takes time(ms): "
 							+ ((end - start) / 1000));
-			logger.debug(
+			log.debug(
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList) - CountDownLatchDemo1:"
 							+ new Date().toString());
 		}
