@@ -119,7 +119,7 @@
 		<target.jdk>1.7</target.jdk>
 		<lombok.version>1.16.20</lombok.version>
 	</properties>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
