@@ -149,6 +149,9 @@ class CountDownLatchTemplete {
 			if (doneCdl != null) {
 				doneCdl.countDown();
 			}
+			if (exe != null) {
+				exe.shutdown();
+			}
 		}
 
 	}
