@@ -226,7 +226,7 @@ public class ExportExcelMultiSupport {
 	 * @param ISxssfWorkBookList
 	 *            sxssfWorkBookList
 	 */
-	public boolean run(final int count, final ISXSSFWorkBook sIsxssfWorkBook,
+	public synchronized boolean run(final int count, final ISXSSFWorkBook sIsxssfWorkBook,
 			final ISxssfWorkBookList sxssfWorkBookList) throws IOException, RuntimeException {
 		long start = 0;
 		if (log.isInfoEnabled()) {

@@ -127,6 +127,10 @@ class CountDownLatchTemplete {
 					"countDownLatch(int, SXSSFWorkBookUtil, ISxssfWorkBookList)",
 					e);
 			exe.shutdownNow();
+		} finally {
+			if (doneCdl != null) {
+				doneCdl.countDown();
+			}
 		}
 
 		if (log.isDebugEnabled()) {
