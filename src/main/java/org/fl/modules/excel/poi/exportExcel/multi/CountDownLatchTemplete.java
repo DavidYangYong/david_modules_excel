@@ -111,9 +111,8 @@ class CountDownLatchTemplete {
 
 				ThreadTemplete threadTemplete = new ThreadTemplete(
 						sxssfWorkBookOperation, rowSelect, sxssfWorkBookList,
-						sxssfWorkBookOperation.getPageSize());
+						sxssfWorkBookOperation.getPageSize(), doneCdl);
 				Future future = exe.submit(threadTemplete);
-				doneCdl.countDown();
 			}
 			long start = 0;
 			if (log.isDebugEnabled()) {
@@ -146,9 +145,6 @@ class CountDownLatchTemplete {
 					e);
 			exe.shutdownNow();
 		} finally {
-			if (doneCdl != null) {
-				doneCdl.countDown();
-			}
 			if (exe != null) {
 				exe.shutdown();
 			}
