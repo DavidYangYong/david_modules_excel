@@ -59,11 +59,13 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<artifactId>lombok</artifactId>
 			<groupId>org.projectlombok</groupId>
 			<version>${lombok.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<artifactId>logback-classic</artifactId>
