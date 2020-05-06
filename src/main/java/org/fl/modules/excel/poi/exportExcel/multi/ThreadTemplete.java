@@ -26,8 +26,7 @@ package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
 
@@ -50,14 +49,8 @@ import org.fl.modules.utils.RowSelect;
  *
  * @version
  */
+@Slf4j
 class ThreadTemplete implements Runnable {
-
-	private static CountDownLatch doneCdl;// 所有连接工作都结束的控制器
-
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger.getLogger(ThreadTemplete.class);
 
 	private int pageSize;
 	private RowSelect rowSelect;
@@ -65,10 +58,9 @@ class ThreadTemplete implements Runnable {
 
 	private SXSSFWorkBookOperation sxssfWorkBookOperation;
 
-	public ThreadTemplete(CountDownLatch doneCdl,
+	public ThreadTemplete(
 			SXSSFWorkBookOperation sxssfWorkBookOperation, RowSelect rowSelect,
 			ISxssfWorkBookList sxssfWorkBookList, int pageSize) {
-		this.doneCdl = doneCdl;
 		this.sxssfWorkBookOperation = sxssfWorkBookOperation;
 		this.rowSelect = rowSelect;
 		this.sxssfWorkBookList = sxssfWorkBookList;
@@ -84,8 +76,8 @@ class ThreadTemplete implements Runnable {
 	}
 
 	public void run() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("run() - " + Thread.currentThread().getName()
+		if (log.isDebugEnabled()) {
+			log.debug("run() - " + Thread.currentThread().getName()
 					+ " has been working!!!!");
 		}
 		try {
@@ -99,23 +91,16 @@ class ThreadTemplete implements Runnable {
 				sxssfWorkBookOperation.excute(
 						sxssfWorkBookOperation.getSxIsxssfWorkBook(), list, pageSize);
 
-				if (logger.isDebugEnabled()) {
-					logger.debug("run() - " + Thread.currentThread().getName()
+				if (log.isDebugEnabled()) {
+					log.debug("run() - " + Thread.currentThread().getName()
 							+ " has been working end !!!!");
 				}
 			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error("run()", e);
+			log.error("run()", e);
 			Thread.currentThread().interrupt();
-		} finally {
-			doneCdl.countDown();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }
