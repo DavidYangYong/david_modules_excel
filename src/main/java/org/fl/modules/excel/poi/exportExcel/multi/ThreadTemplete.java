@@ -26,6 +26,7 @@ package org.fl.modules.excel.poi.exportExcel.multi;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import lombok.extern.slf4j.Slf4j;
 import org.fl.modules.excel.poi.exportExcel.ISxssfWorkBookList;
 import org.fl.modules.utils.RowSelect;
@@ -58,13 +59,16 @@ class ThreadTemplete implements Runnable {
 
 	private SXSSFWorkBookOperation sxssfWorkBookOperation;
 
+	private CountDownLatch countDownLatch;
+
 	public ThreadTemplete(
 			SXSSFWorkBookOperation sxssfWorkBookOperation, RowSelect rowSelect,
-			ISxssfWorkBookList sxssfWorkBookList, int pageSize) {
+			ISxssfWorkBookList sxssfWorkBookList, int pageSize, CountDownLatch countDownLatch) {
 		this.sxssfWorkBookOperation = sxssfWorkBookOperation;
 		this.rowSelect = rowSelect;
 		this.sxssfWorkBookList = sxssfWorkBookList;
 		this.pageSize = pageSize;
+		this.countDownLatch = countDownLatch;
 	}
 
 	public List getList(RowSelect rowSelect, ISxssfWorkBookList sxssfWorkBookList) {
@@ -81,9 +85,6 @@ class ThreadTemplete implements Runnable {
 					+ " has been working!!!!");
 		}
 		try {
-
-			// 此处需要代码清单一的那些连接操作
-
 			List list = getList(rowSelect, sxssfWorkBookList);
 			if (list == null || list.isEmpty()) {
 				Thread.currentThread().interrupt();
@@ -96,11 +97,15 @@ class ThreadTemplete implements Runnable {
 							+ " has been working end !!!!");
 				}
 			}
-
+			countDownLatch.countDown();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.error("run()", e);
 			Thread.currentThread().interrupt();
+		} finally {
+			if (countDownLatch != null) {
+				countDownLatch.countDown();
+			}
 		}
 	}
 }
