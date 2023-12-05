@@ -71,7 +71,7 @@
 			<artifactId>logback-classic</artifactId>
 			<groupId>ch.qos.logback</groupId>
 			<scope>compile</scope>
-			<version>1.2.3</version>
+			<version>1.2.13</version>
 		</dependency>
 		<dependency>
 			<artifactId>log4j-to-slf4j</artifactId>
